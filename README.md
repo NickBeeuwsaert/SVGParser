@@ -79,6 +79,7 @@ NO
 What are the general form to create a SVG command?
 
 same order as in an actual SVG path
+
 | SVG Command | SVGParser |
 |---|---|
 | Move To (M|m) x y | SVGMoveTo(x, y[, isAbsolute=false]); |
