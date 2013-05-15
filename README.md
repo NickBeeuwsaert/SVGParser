@@ -82,13 +82,13 @@ SVG Command initializers are in the same  order as in an actual SVG path. Here i
 
 | SVG Command | SVGParser |
 |---|---|
-| Move To (M or m) x y | SVGMoveTo(x, y[, isAbsolute=false]); |
-| Line To (L or l) x y| SVGLineTo(x, y[, isAbsolute=false]); |
-| Horizontal Line To (H or h) | SVGHLineTo(x[, isAbsolute=false]); |
-| Vertical Line To (V or v) | SVGVLineTo(y[, isAbsolute=false]); |
-| Quadratice Curve To (Q or q) | SVGQuadraticCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]); |
-| Smooth Quadratice Curve To (T ort) | SVGSmoothQuadraticCurveTo(x, y[, isAbsolute=false]); |
-| Cubic Curve To (C or c) | SVGCubicCurveTo(cp1x, cp1y, cp2x, cp2y, x, y[, isAbsolute=false]); |
-| Smooth Cubic Curve To (S or s) | SVGSmoothCubicCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]); |
-| Arc To (A or a) | SVGArcTo(rx, ry, xrot, largeArc, sweep, x, y[, isAbsolute=false]); |
+| Move To (M or m) x y | `SVGMoveTo(x, y[, isAbsolute=false]);` |
+| Line To (L or l) x y| `SVGLineTo(x, y[, isAbsolute=false]);` |
+| Horizontal Line To (H or h) | `SVGHLineTo(x[, isAbsolute=false]);` |
+| Vertical Line To (V or v) | `SVGVLineTo(y[, isAbsolute=false]);` |
+| Quadratice Curve To (Q or q) | `SVGQuadraticCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
+| Smooth Quadratice Curve To (T ort) | `SVGSmoothQuadraticCurveTo(x, y[, isAbsolute=false]);` |
+| Cubic Curve To (C or c) | `SVGCubicCurveTo(cp1x, cp1y, cp2x, cp2y, x, y[, isAbsolute=false]);` |
+| Smooth Cubic Curve To (S or s) | `SVGSmoothCubicCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
+| Arc To (A or a) | `SVGArcTo(rx, ry, xrot, largeArc, sweep, x, y[, isAbsolute=false]);` |
 | Close Path (Z or z) | `SVGClosePath();` |
