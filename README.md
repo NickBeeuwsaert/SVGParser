@@ -16,7 +16,7 @@ Simple! First you can include the SVGParser Library
 
     #include "SVGParser/SVGParser.h"
 
-And then you use the namespace (or not, it just will make your code cleaner if you DO do this(haha DOO DOO))
+And then you use the namespace (or not, it just will make your code cleaner if you DO do this(haha DOODOO))
     
     using namespace SVGParser;
 
@@ -46,8 +46,13 @@ Then you are pretty much set! you can parse SVG paths! YAY!
             break;
         }
     }
-    
-    //Also you could build your own SVGPath
+
+---
+But! What if I want to create my own paths?
+===========================================
+I got your back, bro! Check it out:
+
+
     SVGPath myNewPath;
     myNewPath.push_back(new SVGMoveTo(10,10, true)); //start at 10,10 absolute
     myNewPath.push_back(new SVGLineTo(10,0)); //line right 10 units (relative)
@@ -64,3 +69,24 @@ Then you are pretty much set! you can parse SVG paths! YAY!
     // OR 
     cout << myNewPath << endl;
 
+---
+That's great and all, but can I draw with this also?
+====================================================
+NO
+
+---
+
+What are the general form to create a SVG command?
+
+same order as in an actual SVG path
+| SVG Command | SVGParser |
+|---|---|
+| Move To (M|m) x y | SVGMoveTo(x, y[, isAbsolute=false]); |
+| Line To (L|l) x y| SVGLineTo(x, y[, isAbsolute=false]); |
+| Horizontal Line To (H|h) | SVGHLineTo(x[, isAbsolute=false]); |
+| Vertical Line To (V|v) | SVGVLineTo(y[, isAbsolute=false]); |
+| Quadratice Curve To (Q|q) | SVGQuadraticCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]); |
+| Smooth Quadratice Curve To (T|t) | SVGSmoothQuadraticCurveTo(x, y[, isAbsolute=false]); |
+| Cubic Curve To (C|c) | SVGCubicCurveTo(cp1x, cp1y, cp2x, cp2y, x, y[, isAbsolute=false]); |
+| Smooth Cubic Curve To (S|s) | SVGSmoothCubicCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]); |
+| Arc To (A|a) | SVGArcTo(rx, ry, xrot, largeArc, sweep, x, y[, isAbsolute=false]); |
