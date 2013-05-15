@@ -2,7 +2,7 @@
 #define __SVGPARSER_H__
 #include <vector>
 using namespace std;
-namespace ShittySVG {
+namespace SVGParser {
 	typedef enum SVGCommandType {SVG_INVALID = -1,
 		//SVG_MOVE_TO_REL, SVG_LINE_TO_REL, SVG_QUADRATIC_CURVE_TO_REL, SVG_CUBIC_CURVE_TO_REL,
 		//SVG_MOVE_TO_ABS, SVG_LINE_TO_ABS, SVG_QUADRATIC_CURVE_TO_ABS, SVG_CUBIC_CURVE_TO_ABS,

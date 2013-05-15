@@ -5,7 +5,7 @@
 
 using namespace std;
 
-namespace ShittySVG {
+namespace SVGParser {
 
 	SVGCommandType getSVGCommand(char c){
 		switch(c){
