@@ -58,5 +58,9 @@ Then you are pretty much set! you can parse SVG paths! YAY!
     //print it out
     for(SVGPath::iterator it = myNewPath.begin(); it != myNewPath.end(); it++){
         cout << (*it)->toString();
+        //OR
+        cout << *it;
     }
+    // OR 
+    cout << myNewPath << endl;
 
