@@ -80,15 +80,15 @@ Documentation!
 ===
 SVG Command initializers are in the same  order as in an actual SVG path. Here is a handy dandy table.
 
-| SVG Command | SVGParser |
-|---|---|
-| Move To (M or m) x y | `SVGMoveTo(x, y[, isAbsolute=false]);` |
-| Line To (L or l) x y| `SVGLineTo(x, y[, isAbsolute=false]);` |
-| Horizontal Line To (H or h) | `SVGHLineTo(x[, isAbsolute=false]);` |
-| Vertical Line To (V or v) | `SVGVLineTo(y[, isAbsolute=false]);` |
-| Quadratice Curve To (Q or q) | `SVGQuadraticCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
-| Smooth Quadratice Curve To (T ort) | `SVGSmoothQuadraticCurveTo(x, y[, isAbsolute=false]);` |
-| Cubic Curve To (C or c) | `SVGCubicCurveTo(cp1x, cp1y, cp2x, cp2y, x, y[, isAbsolute=false]);` |
-| Smooth Cubic Curve To (S or s) | `SVGSmoothCubicCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
-| Arc To (A or a) | `SVGArcTo(rx, ry, xrot, largeArc, sweep, x, y[, isAbsolute=false]);` |
-| Close Path (Z or z) | `SVGClosePath();` |
+| SVG Command | SVG Path format | SVGParser |
+|---| --- | ---|
+| Move To | `(M or m) x y` | `SVGMoveTo(x, y[, isAbsolute=false]);` |
+| Line To | `(L or l) x y` | `SVGLineTo(x, y[, isAbsolute=false]);` |
+| Horizontal Line To | `(H or h) x` | `SVGHLineTo(x[, isAbsolute=false]);` |
+| Vertical Line To | `(V or v) y` | `SVGVLineTo(y[, isAbsolute=false]);` |
+| Quadratice Curve To | `(Q or q) x1 y1 x y` | `SVGQuadraticCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
+| Smooth Quadratice Curve To | `(T or t) x y` | `SVGSmoothQuadraticCurveTo(x, y[, isAbsolute=false]);` |
+| Cubic Curve To | `(C or c) x1 y1 x2 y2 x y` | `SVGCubicCurveTo(cp1x, cp1y, cp2x, cp2y, x, y[, isAbsolute=false]);` |
+| Smooth Cubic Curve To | `(S or s) x2 y2 x y` | `SVGSmoothCubicCurveTo(cp1x, cp1y, x, y[, isAbsolute=false]);` |
+| Arc To |  `(A or a) rx ry xrot large-arc-flag sweep-flag x y` | `SVGArcTo(rx, ry, xrot, largeArc, sweep, x, y[, isAbsolute=false]);` |
+| Close Path | `(Z or z)` | `SVGClosePath();` |
