@@ -226,7 +226,7 @@ namespace SVGParser {
 	SVGLineTo::SVGLineTo(float x, float y, bool abs) : SVGCommand(x, y, abs){
 	}
 	
-	string SVGLineTo::toString(){
+	const string SVGLineTo::toString() const {
 		stringstream s;
 		s << (absolute?"L":"l") << x << "," << y;
 		return s.str();
@@ -243,7 +243,7 @@ namespace SVGParser {
 	
 	SVGHLineTo::SVGHLineTo(float x, bool abs) : SVGCommand(x, 0, abs){
 	}
-	string SVGHLineTo::toString(){
+	const string SVGHLineTo::toString() const {
 		stringstream s;
 		s << (absolute?"H":"h") << x;
 		return s.str();
@@ -261,7 +261,7 @@ namespace SVGParser {
 	SVGVLineTo::SVGVLineTo(float y, bool abs) : SVGCommand(0, y, abs){
 	}
 	
-	string SVGVLineTo::toString(){
+	const string SVGVLineTo::toString() const {
 		stringstream s;
 		s << (absolute?"V":"v") << y;
 		return s.str();
@@ -280,7 +280,7 @@ namespace SVGParser {
 	
 	SVGMoveTo::SVGMoveTo(float x, float y, bool abs) : SVGCommand(x, y, abs){
 	}
-	string SVGMoveTo::toString(){
+	const string SVGMoveTo::toString() const {
 		stringstream s;
 		s << (absolute?"M":"m") << x << "," << y;
 		return s.str();
@@ -302,7 +302,7 @@ namespace SVGParser {
 									 								x1(_x1), y1(_y1) {
 									 								}
 									 								
-	string SVGCubicCurveTo::toString(){
+	const string SVGCubicCurveTo::toString() const {
 		stringstream s;
 		s << (absolute?"C":"c") << x0 << "," << y0 << " " << x1 << "," << y1 << " " << x << "," << y;
 		return s.str();
@@ -322,7 +322,7 @@ namespace SVGParser {
 									 								x1(_x1), y1(_y1) {
 									 								}
 									 								
-	string SVGSmoothCubicCurveTo::toString(){
+	const string SVGSmoothCubicCurveTo::toString() const {
 		stringstream s;
 		s << (absolute?"S":"s") << x1 << "," << y1 << " " << x << "," << y;
 		return s.str();
@@ -340,7 +340,7 @@ namespace SVGParser {
 	SVGQuadraticCurveTo::SVGQuadraticCurveTo(float _x0, float _y0,
 											 float x, float y, bool abs) : SVGCommand(x, y, abs), x0(_x0), y0(_y0) {
 											 }
- 	string SVGQuadraticCurveTo::toString(){
+ 	const string SVGQuadraticCurveTo::toString() const {
 		stringstream s;
 		s << (absolute?"Q":"q") << x0 << "," << y0 << " " << x << "," << y;
 		return s.str();
@@ -356,7 +356,7 @@ namespace SVGParser {
 	SVGSmoothQuadraticCurveTo::SVGSmoothQuadraticCurveTo(
 											 float x, float y, bool abs) : SVGCommand(x, y, abs) {
 											 }
- 	string SVGSmoothQuadraticCurveTo::toString(){
+ 	const string SVGSmoothQuadraticCurveTo::toString() const {
 		stringstream s;
 		s << (absolute?"T":"t") <<  x << "," << y;
 		return s.str();
@@ -379,7 +379,7 @@ namespace SVGParser {
 		this->large = large;
 		this->sweep = sweep;
 	}
-	string SVGArcTo::toString(){
+	const string SVGArcTo::toString() const {
 		stringstream s;
 		s << (absolute?"A":"a") <<  rx << "," << ry << " " << rot << " " << large << "," << sweep << " " << x << "," <<y;
 		return s.str();
@@ -399,7 +399,7 @@ namespace SVGParser {
 		
 	}
 
-	string SVGClosePath::toString(){
+	const string SVGClosePath::toString() const {
 		stringstream s;
 		s << (absolute?"Z":"z");
 		return s.str();
@@ -412,5 +412,15 @@ namespace SVGParser {
 	SVGCommandType SVGClosePath::getType(){
 		return SVG_CLOSE_PATH;
 	}
+    std::ostream& operator<< (std::ostream& out, const SVGParser::SVGPath& path){
+        for(SVGParser::SVGPath::const_iterator it = path.begin(); it != path.end(); it++){
+            out << (*it)->toString();
+        }
+        return out;
+    }
+    std::ostream& operator<< (std::ostream& out, const SVGParser::SVGCommand* cmd){
+        out << cmd->toString();
+        return out;
+    }
 };
 

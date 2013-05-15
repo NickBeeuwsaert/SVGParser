@@ -25,7 +25,7 @@ namespace SVGParser {
 			static const int length;
 			float x, y;
 			bool absolute;
-			virtual string toString() = 0;
+			virtual const string toString() const = 0;
 			virtual SVGCommandType getType() = 0;
 			virtual string toString2() = 0;
 	};
@@ -33,7 +33,7 @@ namespace SVGParser {
 		public:
 			static const int length = 2;
 			SVGMoveTo(float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -42,7 +42,7 @@ namespace SVGParser {
 		public:
 			static const int length = 2;
 			SVGLineTo(float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -50,7 +50,7 @@ namespace SVGParser {
 		public:
 			static const int length = 1;
 			SVGHLineTo(float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -58,7 +58,7 @@ namespace SVGParser {
 		public:
 			static const int length = 1;
 			SVGVLineTo(float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -67,7 +67,7 @@ namespace SVGParser {
 		public:
 			SVGQuadraticCurveTo(float, float, float, float, bool=false);
 			float x0, y0;
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -76,14 +76,14 @@ namespace SVGParser {
 		public:
 			float x0, y0, x1, y1;
 			SVGCubicCurveTo(float, float,float, float, float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
 	class SVGSmoothQuadraticCurveTo : public SVGCommand {
 		public:
 			SVGSmoothQuadraticCurveTo(float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -92,7 +92,7 @@ namespace SVGParser {
 		public:
 			float x1, y1;
 			SVGSmoothCubicCurveTo(float, float, float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -101,7 +101,7 @@ namespace SVGParser {
 		public:
 			float rx, ry, rot, large, sweep;
 			SVGArcTo(float, float, float, float, float, float, float, bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
@@ -109,11 +109,13 @@ namespace SVGParser {
 	class SVGClosePath : public SVGCommand {
 		public:
 			SVGClosePath(bool=false);
-			virtual string toString();
+			virtual const string toString() const;
 			virtual SVGCommandType getType();
 			virtual string toString2();
 	};
 	typedef vector<SVGCommand*> SVGPath;
 	SVGPath parsePath(istream&);
+    std::ostream& operator<< (std::ostream&, const SVGParser::SVGPath&);
+    std::ostream& operator<< (std::ostream&, const SVGParser::SVGCommand*);
 };
 #endif//__SVGPARSER_H__
