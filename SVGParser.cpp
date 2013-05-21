@@ -422,5 +422,135 @@ namespace SVGParser {
         out << cmd->toString();
         return out;
     }
+    SVGPath toAbsolute(SVGPath path){
+        float x = 0, y = 0;
+        SVGPath newPath;
+        for(SVGPath::iterator it = path.begin(); it != path.end(); it++){
+            SVGCommand *cmd = *it;
+            bool absolute = cmd->absolute;
+            switch(cmd->getType()){
+                case SVG_MOVE_TO_REL:
+                    newPath.push_back(new SVGMoveTo(x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_LINE_TO_REL:
+                    newPath.push_back(new SVGLineTo(x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_CUBIC_CURVE_TO_REL:
+                    newPath.push_back(new SVGCubicCurveTo(
+                                        x+((SVGCubicCurveTo*)cmd)->x0, y+((SVGCubicCurveTo*)cmd)->y0,
+                                        x+((SVGCubicCurveTo*)cmd)->x1, y+((SVGCubicCurveTo*)cmd)->y1,
+                                        x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_QUADRATIC_CURVE_TO_REL:
+                    newPath.push_back(new SVGQuadraticCurveTo(
+                                        x+((SVGQuadraticCurveTo*)cmd)->x0, y+((SVGQuadraticCurveTo*)cmd)->y0,
+                                        x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_SMOOTH_CUBIC_CURVE_TO_REL:
+                    newPath.push_back(new SVGSmoothCubicCurveTo(
+                                        x+((SVGSmoothCubicCurveTo*)cmd)->x1, y+((SVGSmoothCubicCurveTo*)cmd)->y1,
+                                        x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_SMOOTH_QUADRATIC_CURVE_TO_REL:
+                    newPath.push_back(new SVGSmoothQuadraticCurveTo(
+                                        x+cmd->x, y+cmd->y, true));
+                break;
+                case SVG_HORIZONTAL_LINE_TO_REL:
+                    newPath.push_back(new SVGHLineTo(
+                                        x+cmd->x, true));
+                break;
+                case SVG_VERTICAL_LINE_TO_REL:
+                    newPath.push_back(new SVGVLineTo(
+                                        y+cmd->y, true));
+                break;
+                case SVG_ARC_TO_REL:
+                    newPath.push_back(new SVGArcTo(
+                                        ((SVGArcTo*)cmd)->rx,  ((SVGArcTo*)cmd)->ry,
+                                        ((SVGArcTo*)cmd)->rot, 
+                                        ((SVGArcTo*)cmd)->large, ((SVGArcTo*)cmd)->sweep, 
+                                        x+cmd->x, y+cmd->y, true));
+                break;
+                default: //is is a absolute command, update the coords
+                    x = 0;//cmd->x;
+                    y = 0;//cmd->y;
+                    newPath.push_back(cmd);
+                break;
+            }
+            x+= cmd->x;
+            y+= cmd->y;
+        }
+        return newPath;
+    }
+    SVGPath toRelative(SVGPath path){
+        float x = 0, y = 0;
+        float sx, sy;
+        SVGPath newPath;
+        for(SVGPath::iterator it = path.begin(); it != path.end(); it++){
+            SVGCommand *cmd = *it;
+            bool absolute = cmd->absolute;
+            
+            switch(cmd->getType()){
+                case SVG_MOVE_TO_ABS:
+                    newPath.push_back(new SVGMoveTo(cmd->x - x, cmd->y - y, false));
+                    sx = cmd->x - x;
+                    sy = cmd->y - y;
+                break;
+                case SVG_LINE_TO_ABS:
+                    newPath.push_back(new SVGLineTo(cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_CUBIC_CURVE_TO_ABS:
+                    newPath.push_back(new SVGCubicCurveTo(
+                                        ((SVGCubicCurveTo*)cmd)->x0 - x, ((SVGCubicCurveTo*)cmd)->y0 - y,
+                                        ((SVGCubicCurveTo*)cmd)->x1 - x, ((SVGCubicCurveTo*)cmd)->y1 - y,
+                                        cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_QUADRATIC_CURVE_TO_ABS:
+                    newPath.push_back(new SVGQuadraticCurveTo(
+                                        ((SVGQuadraticCurveTo*)cmd)->x0 - x, ((SVGQuadraticCurveTo*)cmd)->y0 - y,
+                                        cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_SMOOTH_CUBIC_CURVE_TO_ABS:
+                    newPath.push_back(new SVGSmoothCubicCurveTo(
+                                        ((SVGSmoothCubicCurveTo*)cmd)->x1 - x, ((SVGSmoothCubicCurveTo*)cmd)->y1 - y,
+                                        cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_SMOOTH_QUADRATIC_CURVE_TO_ABS:
+                    newPath.push_back(new SVGSmoothQuadraticCurveTo(
+                                        cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_HORIZONTAL_LINE_TO_ABS:
+                    newPath.push_back(new SVGHLineTo(
+                                        cmd->x - x, false));
+                break;
+                case SVG_VERTICAL_LINE_TO_ABS:
+                    newPath.push_back(new SVGVLineTo(
+                                        cmd->y - y, false));
+                break;
+                case SVG_ARC_TO_ABS:
+                    newPath.push_back(new SVGArcTo(
+                                        ((SVGArcTo*)cmd)->rx,  ((SVGArcTo*)cmd)->ry,
+                                        ((SVGArcTo*)cmd)->rot, 
+                                        ((SVGArcTo*)cmd)->large, ((SVGArcTo*)cmd)->sweep, 
+                                        cmd->x - x, cmd->y - y, false));
+                break;
+                case SVG_CLOSE_PATH:
+                    x=sx, y= sy;
+                    newPath.push_back(new SVGClosePath());
+                break;
+                default: //already relative
+                    //x = 0;//cmd->x;
+                    //y = 0;//cmd->y;
+                    //x = cmd->x;
+                    //y = cmd->y;
+                    newPath.push_back(cmd);
+                break;
+            }
+            if(absolute){
+                x = cmd->x;
+                y = cmd->y;
+            }
+        }
+        return newPath;
+    }
 };
 

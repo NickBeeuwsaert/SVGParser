@@ -1,6 +1,7 @@
 #ifndef __SVGPARSER_H__
 #define __SVGPARSER_H__
 #include <vector>
+#include <string>
 using namespace std;
 namespace SVGParser {
 	typedef enum SVGCommandType {SVG_INVALID = -1,
@@ -115,6 +116,8 @@ namespace SVGParser {
 	};
 	typedef vector<SVGCommand*> SVGPath;
 	SVGPath parsePath(istream&);
+    SVGPath toAbsolute(SVGPath);
+    SVGPath toRelative(SVGPath);
     std::ostream& operator<< (std::ostream&, const SVGParser::SVGPath&);
     std::ostream& operator<< (std::ostream&, const SVGParser::SVGCommand*);
 };
