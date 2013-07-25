@@ -16,7 +16,7 @@ Simple! First you can include the SVGParser Library
 
     #include "SVGParser/SVGParser.h"
 
-And then you use the namespace (or not, it just will make your code cleaner if you DO do this(haha DOODOO))
+And then you use the namespace (or not, if you prefer cleaner code)
     
     using namespace SVGParser;
 
